@@ -1,9 +1,9 @@
-package org.jboss.aerogear.android.unifiedpush.demo;
+package org.jboss.aerogear.android.unifiedpush.quickstart;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-public class UnifiedPushDemoActivity extends Activity {
+public class PushQuickstartActivity extends Activity {
     /**
      * Called when the activity is first created.
      */
