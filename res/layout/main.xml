@@ -3,11 +3,42 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-        >
+              android:gravity="center"
+              android:padding="20dp">
+
+    <ImageView
+            android:layout_width="250dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/aerogear_logo"/>
+
     <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World, UnifiedPushDemoActivity"
-            />
+            android:layout_gravity="right"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="Push Quickstart "/>
+
+    <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:paddingTop="30dp"
+            android:layout_gravity="center"
+            android:text=""/>
+
+    <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text=""/>
+
+
 </LinearLayout>
 
