@@ -26,6 +26,36 @@
     <packaging>apk</packaging>
     <name>AeroGear Push Quickstart Android</name>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <distribution>repo</distribution>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>passos</id>
+            <name>Daniel Passos</name>
+            <url>http://passos.me/</url>
+            <email>dpassos@redhat.com</email>
+        </developer>
+
+        <developer>
+            <id>secondsun</id>
+            <name>Summers Pittman</name>
+            <url>http://blog.sagaoftherealms.net/</url>
+            <email>supittma@redhat.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:aerogear/aerogear-push-quickstart-android.git</connection>
+        <developerConnection>scm:git:git@github.com:aerogear/aerogear-push-quickstart-android.git</developerConnection>
+        <url>git@github.com:aerogear/aerogear-push-quickstart-android.git</url>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>    
         <proguard.skip>true</proguard.skip>
@@ -135,6 +165,20 @@
                     </proguard>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.9.0</version>
+                <configuration>
+                    <header>${project.basedir}/support/license_header.txt</header>
+                    <includes>
+                        <include>src/**</include>
+                        <include>test/**</include>
+                    </includes>
+                    <strictCheck>true</strictCheck>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
