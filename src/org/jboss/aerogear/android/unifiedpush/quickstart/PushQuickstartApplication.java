@@ -49,7 +49,7 @@ public class PushQuickstartApplication extends Application {
             config.setMobileVariantId("MOBILE-VARIANT-ID");
             config.setAlias("BEAUTIFUL-ALIAS");
 
-            r.register(getApplicationContext(), pushConfig, new Callback<Void>() {
+            r.register(getApplicationContext(), config, new Callback<Void>() {
                 @Override
                 public void onSuccess(Void ignore) {
                     registrar = r;
