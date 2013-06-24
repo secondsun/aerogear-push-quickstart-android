@@ -17,6 +17,7 @@
 package org.jboss.aerogear.android.unifiedpush.quickstart;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -105,6 +106,10 @@ public class PushQuickstartLeadsActivity extends Activity implements MessageHand
     }
 
     public void retrieveLeads() {
+        final ProgressDialog dialog = ProgressDialog.show(PushQuickstartLeadsActivity.this,
+                "Wait...", "Retrieving leads", true, true);
+
+
         Pipe<Lead> pipe = application.getLeadPipe(this);
         pipe.read(new Callback<List<Lead>>() {
             @Override
@@ -112,11 +117,11 @@ public class PushQuickstartLeadsActivity extends Activity implements MessageHand
                 ArrayAdapter<Lead> adapter = new ArrayAdapter<Lead>(PushQuickstartLeadsActivity.this,
                         android.R.layout.simple_list_item_1, data);
                 listView.setAdapter(adapter);
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(Exception e) {
-
             }
         });
     }
