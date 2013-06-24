@@ -18,7 +18,11 @@ package org.jboss.aerogear.android.unifiedpush.quickstart;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -62,6 +66,29 @@ public class PushQuickstartLeadsActivity extends Activity implements MessageHand
         super.onPause();
         Registrar.unregisterMainThreadHandler(this);
         Registrar.registerBackgroundThreadHandler(NotifyingMessageHandler.instance);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.leads, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        application.logout(new Callback<Void>() {
+            @Override
+            public void onSuccess(Void data) {
+                finish();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

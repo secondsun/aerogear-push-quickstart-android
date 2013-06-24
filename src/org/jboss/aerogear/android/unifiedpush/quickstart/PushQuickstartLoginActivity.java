@@ -39,13 +39,14 @@ public class PushQuickstartLoginActivity extends Activity {
                 application.login(user, pass, new Callback<HeaderAndBody>() {
                     @Override
                     public void onSuccess(HeaderAndBody data) {
+                        dialog.dismiss();
                         startActivity(new Intent(PushQuickstartLoginActivity.this, PushQuickstartLeadsActivity.class));
                     }
 
                     @Override
                     public void onFailure(Exception e) {
-                        displayErrorMessage(e, dialog);
                         dialog.dismiss();
+                        displayErrorMessage(e, dialog);
                     }
                 });
             }
