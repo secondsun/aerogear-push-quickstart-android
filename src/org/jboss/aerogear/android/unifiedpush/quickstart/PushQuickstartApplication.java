@@ -16,13 +16,17 @@
  */
 package org.jboss.aerogear.android.unifiedpush.quickstart;
 
+import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 import org.jboss.aerogear.android.Callback;
+import org.jboss.aerogear.android.Pipeline;
 import org.jboss.aerogear.android.authentication.AuthenticationConfig;
 import org.jboss.aerogear.android.authentication.AuthenticationModule;
 import org.jboss.aerogear.android.authentication.impl.Authenticator;
 import org.jboss.aerogear.android.http.HeaderAndBody;
+import org.jboss.aerogear.android.impl.pipeline.PipeConfig;
+import org.jboss.aerogear.android.pipeline.Pipe;
 import org.jboss.aerogear.android.unifiedpush.PushConfig;
 import org.jboss.aerogear.android.unifiedpush.Registrar;
 
@@ -39,8 +43,9 @@ public class PushQuickstartApplication extends Application {
     private static final String MOBILE_VARIANT_ID = "";
     private static final String ALIAS = "";
 
-    private AuthenticationModule authBackEnd;
     private Registrar registrar;
+    private AuthenticationModule authBackEnd;
+    private Pipeline pipeline;
 
     @Override
     public void onCreate() {
@@ -48,6 +53,7 @@ public class PushQuickstartApplication extends Application {
 
         registerDeviceOnPushServer();
         configureBackendAuthentication();
+        createApplicationPipes();
     }
 
     private void registerDeviceOnPushServer() {
@@ -94,5 +100,29 @@ public class PushQuickstartApplication extends Application {
     public void logout(Callback<Void> callback) {
         authBackEnd.logout(callback);
     }
+
+    private void createApplicationPipes() {
+
+        try {
+
+            final URL serverURL = new URL(BASE_BACKEND_URL);
+            pipeline = new Pipeline(serverURL);
+
+            // Lead
+
+            PipeConfig leadPipeConfig = new PipeConfig(serverURL, Lead.class);
+            leadPipeConfig.setEndpoint("leads");
+            pipeline.pipe(Lead.class, leadPipeConfig);
+
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public Pipe<Lead> getLeadPipe(Activity activity) {
+        return this.pipeline.get("lead", activity);
+    }
+
 
 }

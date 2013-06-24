@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".PushQuickstartActivity" android:label="@string/app_name" />
+        <activity android:name=".PushQuickstartLeadsActivity" android:label="@string/app_name" />
         <receiver
                 android:name="org.jboss.aerogear.android.unifiedpush.AGPushMessageReceiver"
                 android:permission="com.google.android.c2dm.permission.SEND">

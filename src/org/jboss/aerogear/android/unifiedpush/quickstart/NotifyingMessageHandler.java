@@ -46,7 +46,7 @@ public class NotifyingMessageHandler implements MessageHandler {
 
         mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent intent = new Intent(ctx, PushQuickstartActivity.class)
+        Intent intent = new Intent(ctx, PushQuickstartLeadsActivity.class)
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             .putExtra("alert", msg);
 

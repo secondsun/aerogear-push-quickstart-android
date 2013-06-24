@@ -39,7 +39,7 @@ public class PushQuickstartLoginActivity extends Activity {
                 application.login(user, pass, new Callback<HeaderAndBody>() {
                     @Override
                     public void onSuccess(HeaderAndBody data) {
-                        startActivity(new Intent(PushQuickstartLoginActivity.this, PushQuickstartActivity.class));
+                        startActivity(new Intent(PushQuickstartLoginActivity.this, PushQuickstartLeadsActivity.class));
                     }
 
                     @Override

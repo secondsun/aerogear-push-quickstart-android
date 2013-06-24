@@ -19,27 +19,29 @@ package org.jboss.aerogear.android.unifiedpush.quickstart;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
+import org.jboss.aerogear.android.Callback;
+import org.jboss.aerogear.android.pipeline.Pipe;
 import org.jboss.aerogear.android.unifiedpush.MessageHandler;
 import org.jboss.aerogear.android.unifiedpush.Registrar;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
-public class PushQuickstartActivity extends Activity implements MessageHandler {
+public class PushQuickstartLeadsActivity extends Activity implements MessageHandler {
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat ("MM/dd/yyyy HH:mm:ss Z");
-    private TextView messageDisplay;
-    private TextView timeDisplay;
+    private PushQuickstartApplication application;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.leads);
 
-        messageDisplay = (TextView) findViewById(R.id.message);
-        timeDisplay = (TextView) findViewById(R.id.time);
+        application = (PushQuickstartApplication) getApplication();
+
+        listView = (ListView) findViewById(R.id.leads);
 
         if (getIntent() != null && getIntent().hasExtra("alert")) {
             onMessage(this, getIntent().getExtras());
@@ -51,6 +53,8 @@ public class PushQuickstartActivity extends Activity implements MessageHandler {
         super.onResume();
         Registrar.unregisterBackgroundThreadHandler(NotifyingMessageHandler.instance);
         Registrar.registerMainThreadHandler(this);
+
+        retrieveLeads();
     }
 
     @Override
@@ -62,15 +66,7 @@ public class PushQuickstartActivity extends Activity implements MessageHandler {
 
     @Override
     public void onMessage(Context context, Bundle bundle) {
-        messageDisplay.setText(bundle.getString("alert"));
-
-        StringBuilder time = new StringBuilder();
-        time.append("\n");
-        time.append("(");
-        time.append(dateFormat.format(new Date()));
-        time.append(")");
-
-        timeDisplay.setText(time.toString());
+        Toast.makeText(this, bundle.getString("alert"), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -79,6 +75,23 @@ public class PushQuickstartActivity extends Activity implements MessageHandler {
 
     @Override
     public void onError() {
+    }
+
+    public void retrieveLeads() {
+        Pipe<Lead> pipe = application.getLeadPipe(this);
+        pipe.read(new Callback<List<Lead>>() {
+            @Override
+            public void onSuccess(List<Lead> data) {
+                ArrayAdapter<Lead> adapter = new ArrayAdapter<Lead>(PushQuickstartLeadsActivity.this,
+                        android.R.layout.simple_list_item_1, data);
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        });
     }
 
 }
