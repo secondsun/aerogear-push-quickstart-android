@@ -21,7 +21,6 @@ import android.util.Log;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.authentication.AuthenticationConfig;
 import org.jboss.aerogear.android.authentication.AuthenticationModule;
-import org.jboss.aerogear.android.authentication.impl.AuthTypes;
 import org.jboss.aerogear.android.authentication.impl.Authenticator;
 import org.jboss.aerogear.android.http.HeaderAndBody;
 import org.jboss.aerogear.android.unifiedpush.PushConfig;
@@ -34,22 +33,35 @@ public class PushQuickstartApplication extends Application {
 
     private static final String TAG = PushQuickstartApplication.class.getSimpleName();
 
+    private static final String BASE_BACKEND_URL = "";
+    private static final String REGISTER_SERVER_URL = "";
+    private static final String SENDER_ID = "";
+    private static final String MOBILE_VARIANT_ID = "";
+    private static final String ALIAS = "";
+
+    private AuthenticationModule authBackEnd;
     private Registrar registrar;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        registerDeviceOnPushServer();
+        configureBackendAuthentication();
+    }
+
+    private void registerDeviceOnPushServer() {
+
         try {
 
-            final URL registerURL = new URL("http://{SERVER}/ag-push/rest/registry/device");
-
+            final URL registerURL = new URL(REGISTER_SERVER_URL);
             final Registrar r = new Registrar(registerURL);
-            PushConfig config = new PushConfig("SENDER-ID");
-            config.setMobileVariantId("MOBILE-VARIANT-ID");
-            config.setAlias("BEAUTIFUL-ALIAS");
+            PushConfig pushConfig = new PushConfig(SENDER_ID);
+            pushConfig.setMobileVariantId(MOBILE_VARIANT_ID);
+            pushConfig.setAlias(ALIAS);
 
-            r.register(getApplicationContext(), config, new Callback<Void>() {
+
+            r.register(getApplicationContext(), pushConfig, new Callback<Void>() {
                 @Override
                 public void onSuccess(Void ignore) {
                     registrar = r;
@@ -64,6 +76,23 @@ public class PushQuickstartApplication extends Application {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    private void configureBackendAuthentication() {
+        Authenticator authenticator = new Authenticator(BASE_BACKEND_URL);
+        AuthenticationConfig authenticationConfig = new AuthenticationConfig();
+        authenticationConfig.setLoginEndpoint("/login");
+        authenticationConfig.setLogoutEndpoint("/logout");
+        authBackEnd = authenticator.auth("login", authenticationConfig);
+    }
+
+    public void login(String username, String password, Callback<HeaderAndBody> callback) {
+        authBackEnd.login(username, password, callback);
+    }
+
+    public void logout(Callback<Void> callback) {
+        authBackEnd.logout(callback);
     }
 
 }
