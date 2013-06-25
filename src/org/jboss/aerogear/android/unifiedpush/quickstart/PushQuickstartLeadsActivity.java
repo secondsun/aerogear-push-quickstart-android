@@ -78,17 +78,23 @@ public class PushQuickstartLeadsActivity extends Activity implements MessageHand
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        application.logout(new Callback<Void>() {
-            @Override
-            public void onSuccess(Void data) {
-                finish();
-            }
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                retrieveLeads();
+                break;
+            case R.id.logout:
+                application.logout(new Callback<Void>() {
+                    @Override
+                    public void onSuccess(Void data) {
+                        finish();
+                    }
 
-            @Override
-            public void onFailure(Exception e) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-        });
+                    @Override
+                    public void onFailure(Exception e) {
+                    }
+                });
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -105,7 +111,7 @@ public class PushQuickstartLeadsActivity extends Activity implements MessageHand
     public void onError() {
     }
 
-    public void retrieveLeads() {
+    private void retrieveLeads() {
         final ProgressDialog dialog = ProgressDialog.show(PushQuickstartLeadsActivity.this,
                 "Wait...", "Retrieving leads", true, true);
 
