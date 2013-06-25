@@ -101,6 +101,7 @@ public class PushQuickstartLeadsActivity extends Activity implements MessageHand
     @Override
     public void onMessage(Context context, Bundle bundle) {
         Toast.makeText(this, bundle.getString("alert"), Toast.LENGTH_LONG).show();
+        retrieveLeads();
     }
 
     @Override
