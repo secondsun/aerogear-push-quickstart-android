@@ -17,13 +17,18 @@
 package org.jboss.aerogear.android.unifiedpush.quickstart;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -36,6 +41,9 @@ import java.util.List;
 
 public class PushQuickstartLeadsActivity extends Activity implements MessageHandler {
 
+    private static final int DIALOG_DISPLAY_LEAD = 1;
+    private static final String LEAD_DATA = "LEAD_DATA";
+
     private PushQuickstartApplication application;
     private ListView listView;
 
@@ -47,11 +55,19 @@ public class PushQuickstartLeadsActivity extends Activity implements MessageHand
         application = (PushQuickstartApplication) getApplication();
 
         listView = (ListView) findViewById(R.id.leads);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Lead lead = (Lead) adapterView.getItemAtPosition(position);
+                displayLead(lead);
+            }
+        });
 
         if (getIntent() != null && getIntent().hasExtra("alert")) {
             onMessage(this, getIntent().getExtras());
         }
     }
+
 
     @Override
     protected void onResume() {
@@ -131,6 +147,23 @@ public class PushQuickstartLeadsActivity extends Activity implements MessageHand
             public void onFailure(Exception e) {
             }
         });
+    }
+
+    private void displayLead(Lead lead) {
+        new AlertDialog.Builder(this)
+            .setMessage(lead.getName())
+            .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                }
+            })
+            .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            })
+        .create()
+        .show();
     }
 
 }
