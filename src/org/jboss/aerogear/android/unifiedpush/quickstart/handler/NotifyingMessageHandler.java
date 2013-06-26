@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.unifiedpush.quickstart;
+package org.jboss.aerogear.android.unifiedpush.quickstart.handler;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -24,6 +24,8 @@ import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import org.jboss.aerogear.android.unifiedpush.MessageHandler;
+import org.jboss.aerogear.android.unifiedpush.quickstart.R;
+import org.jboss.aerogear.android.unifiedpush.quickstart.activities.PushQuickstartActivity;
 
 public class NotifyingMessageHandler implements MessageHandler {
 
@@ -46,9 +48,9 @@ public class NotifyingMessageHandler implements MessageHandler {
 
         mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent intent = new Intent(ctx, PushQuickstartLeadsActivity.class)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            .putExtra("alert", msg);
+        Intent intent = new Intent(ctx, PushQuickstartActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .putExtra("alert", msg);
 
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, intent, 0);
 

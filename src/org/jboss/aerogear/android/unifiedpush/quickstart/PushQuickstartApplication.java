@@ -16,8 +16,8 @@
  */
 package org.jboss.aerogear.android.unifiedpush.quickstart;
 
-import android.app.Activity;
 import android.app.Application;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.Pipeline;
@@ -29,6 +29,7 @@ import org.jboss.aerogear.android.impl.pipeline.PipeConfig;
 import org.jboss.aerogear.android.pipeline.Pipe;
 import org.jboss.aerogear.android.unifiedpush.PushConfig;
 import org.jboss.aerogear.android.unifiedpush.Registrar;
+import org.jboss.aerogear.android.unifiedpush.quickstart.model.Lead;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -101,6 +102,10 @@ public class PushQuickstartApplication extends Application {
         authBackEnd.logout(callback);
     }
 
+    public boolean isLoggedIn() {
+        return authBackEnd.isLoggedIn();
+    }
+
     private void createApplicationPipes() {
 
         try {
@@ -120,9 +125,8 @@ public class PushQuickstartApplication extends Application {
 
     }
 
-    public Pipe<Lead> getLeadPipe(Activity activity) {
-        return this.pipeline.get("lead", activity);
+    public Pipe<Lead> getLeadPipe(Fragment fragment) {
+        return this.pipeline.get("lead", fragment, getApplicationContext());
     }
-
 
 }
