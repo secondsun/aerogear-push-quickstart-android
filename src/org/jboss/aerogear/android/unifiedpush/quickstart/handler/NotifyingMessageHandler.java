@@ -45,7 +45,6 @@ public class NotifyingMessageHandler implements MessageHandler {
     }
 
     private void sendNotification(String msg) {
-
         mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Intent intent = new Intent(ctx, PushQuickstartActivity.class)
@@ -56,6 +55,7 @@ public class NotifyingMessageHandler implements MessageHandler {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(ctx)
+                        .setAutoCancel(true)
                         .setSmallIcon(R.drawable.ic_launcher)
                         .setContentTitle("AeroGear Push Notification")
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
