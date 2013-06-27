@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.pipeline.Pipe;
@@ -84,12 +85,24 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
         });
     }
 
-    private void displayLead(Lead lead) {
+    private void displayLead(final Lead lead) {
         new AlertDialog.Builder(getActivity())
             .setMessage(lead.getName())
             .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                    lead.setSaleAgent(application.getSaleAgent().getId());
+                    Pipe<Lead> leadPipe = application.getLeadPipe(PushQuickstartLeadsFragments.this);
+                    leadPipe.save(lead, new Callback<Lead>() {
+                        @Override
+                        public void onSuccess(Lead data) {
+                            retrieveLeads();
+                        }
 
+                        @Override
+                        public void onFailure(Exception e) {
+                            // Notify
+                        }
+                    });
                 }
             })
             .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {

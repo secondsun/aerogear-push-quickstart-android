@@ -16,10 +16,13 @@
  */
 package org.jboss.aerogear.android.unifiedpush.quickstart.model;
 
+import org.jboss.aerogear.android.RecordId;
+
 import java.io.Serializable;
 
 public class Lead implements Serializable {
 
+    @RecordId
     private Long id;
     private String name;
     private String location;

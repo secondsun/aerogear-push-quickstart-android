@@ -30,6 +30,7 @@ import org.jboss.aerogear.android.pipeline.Pipe;
 import org.jboss.aerogear.android.unifiedpush.PushConfig;
 import org.jboss.aerogear.android.unifiedpush.Registrar;
 import org.jboss.aerogear.android.unifiedpush.quickstart.model.Lead;
+import org.jboss.aerogear.android.unifiedpush.quickstart.model.SaleAgent;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -47,6 +48,15 @@ public class PushQuickstartApplication extends Application {
     private Registrar registrar;
     private AuthenticationModule authBackEnd;
     private Pipeline pipeline;
+    private SaleAgent saleAgent;
+
+    public SaleAgent getSaleAgent() {
+        return saleAgent;
+    }
+
+    public void setSaleAgente(SaleAgent saleAgent) {
+        this.saleAgent = saleAgent;
+    }
 
     @Override
     public void onCreate() {
@@ -66,7 +76,6 @@ public class PushQuickstartApplication extends Application {
             PushConfig pushConfig = new PushConfig(SENDER_ID);
             pushConfig.setMobileVariantId(MOBILE_VARIANT_ID);
             pushConfig.setAlias(ALIAS);
-
 
             r.register(getApplicationContext(), pushConfig, new Callback<Void>() {
                 @Override
@@ -112,8 +121,6 @@ public class PushQuickstartApplication extends Application {
 
             final URL serverURL = new URL(BASE_BACKEND_URL);
             pipeline = new Pipeline(serverURL);
-
-            // Lead
 
             PipeConfig leadPipeConfig = new PipeConfig(serverURL, Lead.class);
             leadPipeConfig.setEndpoint("leads");

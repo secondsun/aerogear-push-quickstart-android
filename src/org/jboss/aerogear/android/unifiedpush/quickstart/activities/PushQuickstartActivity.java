@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.gson.Gson;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.http.HeaderAndBody;
 import org.jboss.aerogear.android.unifiedpush.MessageHandler;
@@ -34,6 +35,9 @@ import org.jboss.aerogear.android.unifiedpush.quickstart.R;
 import org.jboss.aerogear.android.unifiedpush.quickstart.fragments.PushQuickstartLeadsFragments;
 import org.jboss.aerogear.android.unifiedpush.quickstart.fragments.PushQuickstartLoginFragment;
 import org.jboss.aerogear.android.unifiedpush.quickstart.handler.NotifyingMessageHandler;
+import org.jboss.aerogear.android.unifiedpush.quickstart.model.SaleAgent;
+
+import java.nio.charset.Charset;
 
 public class PushQuickstartActivity extends SherlockFragmentActivity implements MessageHandler {
 
@@ -133,6 +137,9 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
         application.login(user, pass, new Callback<HeaderAndBody>() {
             @Override
             public void onSuccess(HeaderAndBody data) {
+                String response = new String(data.getBody(), Charset.forName("UTF-8"));
+                SaleAgent saleAgent = new Gson().fromJson(response, SaleAgent.class);
+                application.setSaleAgente(saleAgent);
                 dialog.dismiss();
                 displayLeadsScreen();
             }
