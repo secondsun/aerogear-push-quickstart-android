@@ -30,7 +30,6 @@ import org.jboss.aerogear.android.unifiedpush.quickstart.activities.PushQuicksta
 public class NotifyingMessageHandler implements MessageHandler {
 
     public static final int NOTIFICATION_ID = 1;
-    private NotificationManager mNotificationManager;
     private Context ctx;
 
     public static final NotifyingMessageHandler instance = new NotifyingMessageHandler();
@@ -45,7 +44,7 @@ public class NotifyingMessageHandler implements MessageHandler {
     }
 
     private void sendNotification(String msg) {
-        mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mNotificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Intent intent = new Intent(ctx, PushQuickstartActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

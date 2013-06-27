@@ -10,7 +10,8 @@
             android:layout_width="250dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
-            android:src="@drawable/aerogear_logo"/>
+            android:src="@drawable/aerogear_logo"
+            android:contentDescription="@string/aerogear_logo"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -18,7 +19,7 @@
             android:layout_gravity="right"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:text="Push Quickstart"/>
+            android:text="@string/push_quickstart"/>
 
     <Space
             android:layout_width="fill_parent"
@@ -27,18 +28,19 @@
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Username:"/>
+            android:text="@string/username"/>
 
     <EditText
             android:id="@+id/username"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:text="john"/>
 
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Password:"/>
+            android:text="@string/password"/>
 
     <EditText
             android:id="@+id/password"
@@ -51,6 +53,6 @@
             android:id="@+id/login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Login"/>
+            android:text="@string/login"/>
 
 </LinearLayout>

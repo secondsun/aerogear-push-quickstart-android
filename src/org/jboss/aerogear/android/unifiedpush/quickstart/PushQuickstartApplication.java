@@ -45,7 +45,6 @@ public class PushQuickstartApplication extends Application {
     private static final String MOBILE_VARIANT_ID = "";
     private static final String ALIAS = "";
 
-    private Registrar registrar;
     private AuthenticationModule authBackEnd;
     private Pipeline pipeline;
     private SaleAgent saleAgent;
@@ -80,7 +79,6 @@ public class PushQuickstartApplication extends Application {
             r.register(getApplicationContext(), pushConfig, new Callback<Void>() {
                 @Override
                 public void onSuccess(Void ignore) {
-                    registrar = r;
                 }
 
                 @Override

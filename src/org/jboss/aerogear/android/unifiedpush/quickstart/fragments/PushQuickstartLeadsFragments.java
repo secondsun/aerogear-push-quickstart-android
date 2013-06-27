@@ -42,7 +42,6 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
     private PushQuickstartApplication application;
     private PushQuickstartActivity activity;
     private ListView listView;
-    private Spinner spinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,7 +60,7 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
             }
         });
 
-        spinner = (Spinner) view.findViewById(R.id.status);
+        Spinner spinner = (Spinner) view.findViewById(R.id.status);
 
         ArrayAdapter<String> allStatus = (ArrayAdapter) spinner.getAdapter();
         int spinnerPosition = allStatus.getPosition(application.getSaleAgent().getStatus());
@@ -85,7 +84,7 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
     }
 
     public void retrieveLeads() {
-        final ProgressDialog dialog = ProgressDialog.show(activity, "Wait...", "Retrieving leads", true, true);
+        final ProgressDialog dialog = ProgressDialog.show(activity, getString(R.string.wait), getString(R.string.retreving_leads), true, true);
 
         Pipe<Lead> pipe = application.getLeadPipe(this);
         pipe.read(new Callback<List<Lead>>() {
@@ -98,7 +97,7 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
 
             @Override
             public void onFailure(Exception e) {
-                ((PushQuickstartActivity) activity).displayErrorMessage(e, dialog);
+                activity.displayErrorMessage(e, dialog);
             }
         });
     }
@@ -137,7 +136,7 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
     }
 
     private void updateStatus(String status) {
-        final ProgressDialog dialog = ProgressDialog.show(activity, "Wait...", "Updating status", true, true);
+        final ProgressDialog dialog = ProgressDialog.show(activity, getString(R.string.wait), getString(R.string.updating_status), true, true);
 
         SaleAgent saleAgent = application.getSaleAgent();
         saleAgent.setStatus(status);
@@ -151,7 +150,7 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
 
             @Override
             public void onFailure(Exception e) {
-                ((PushQuickstartActivity) activity).displayErrorMessage(e, dialog);
+                activity.displayErrorMessage(e, dialog);
             }
         });
     }

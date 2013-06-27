@@ -3,11 +3,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/menuLead">
         <item android:id="@+id/refresh"
-              android:title="Refresh"
+              android:title="@string/refresh"
               android:icon="@drawable/ic_menu_refresh"
               android:showAsAction="ifRoom"/>
         <item android:id="@+id/logout"
-              android:title="Logout"
+              android:title="@string/logout"
               android:icon="@drawable/ic_menu_logout"
               android:showAsAction="ifRoom"/>
     </group>
