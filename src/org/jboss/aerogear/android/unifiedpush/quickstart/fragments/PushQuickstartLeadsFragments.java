@@ -23,10 +23,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import com.actionbarsherlock.app.SherlockFragment;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.pipeline.Pipe;
@@ -34,14 +31,18 @@ import org.jboss.aerogear.android.unifiedpush.quickstart.PushQuickstartApplicati
 import org.jboss.aerogear.android.unifiedpush.quickstart.R;
 import org.jboss.aerogear.android.unifiedpush.quickstart.activities.PushQuickstartActivity;
 import org.jboss.aerogear.android.unifiedpush.quickstart.model.Lead;
+import org.jboss.aerogear.android.unifiedpush.quickstart.model.SaleAgent;
 
 import java.util.List;
+
+import static android.R.layout.*;
 
 public class PushQuickstartLeadsFragments extends SherlockFragment {
 
     private PushQuickstartApplication application;
     private PushQuickstartActivity activity;
     private ListView listView;
+    private Spinner spinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,49 +61,54 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
             }
         });
 
+        spinner = (Spinner) view.findViewById(R.id.status);
+
+        ArrayAdapter<String> allStatus = (ArrayAdapter) spinner.getAdapter();
+        int spinnerPosition = allStatus.getPosition(application.getSaleAgent().getStatus());
+        spinner.setSelection(spinnerPosition);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                String status = (String) adapterView.getItemAtPosition(position);
+                updateStatus(status);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
         retrieveLeads();
 
         return view;
     }
 
     public void retrieveLeads() {
-        final ProgressDialog dialog = ProgressDialog.show(getActivity(), "Wait...", "Retrieving leads", true, true);
+        final ProgressDialog dialog = ProgressDialog.show(activity, "Wait...", "Retrieving leads", true, true);
 
         Pipe<Lead> pipe = application.getLeadPipe(this);
         pipe.read(new Callback<List<Lead>>() {
             @Override
             public void onSuccess(List<Lead> data) {
-                ArrayAdapter<Lead> adapter = new ArrayAdapter<Lead>(getActivity(),
-                        android.R.layout.simple_list_item_1, data);
+                ArrayAdapter<Lead> adapter = new ArrayAdapter<Lead>(activity, simple_list_item_1, data);
                 listView.setAdapter(adapter);
                 dialog.dismiss();
             }
 
             @Override
             public void onFailure(Exception e) {
-                ((PushQuickstartActivity) getActivity()).displayErrorMessage(e, dialog);
+                ((PushQuickstartActivity) activity).displayErrorMessage(e, dialog);
             }
         });
     }
 
     private void displayLead(final Lead lead) {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(activity)
             .setMessage(lead.getName())
             .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    lead.setSaleAgent(application.getSaleAgent().getId());
-                    Pipe<Lead> leadPipe = application.getLeadPipe(PushQuickstartLeadsFragments.this);
-                    leadPipe.save(lead, new Callback<Lead>() {
-                        @Override
-                        public void onSuccess(Lead data) {
-                            retrieveLeads();
-                        }
-
-                        @Override
-                        public void onFailure(Exception e) {
-                            // Notify
-                        }
-                    });
+                    acceptLead(lead);
                 }
             })
             .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
@@ -112,6 +118,42 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
             })
         .create()
         .show();
+    }
+
+    private void acceptLead(Lead lead) {
+        lead.setSaleAgent(application.getSaleAgent().getId());
+        Pipe<Lead> leadPipe = application.getLeadPipe(this);
+        leadPipe.save(lead, new Callback<Lead>() {
+            @Override
+            public void onSuccess(Lead data) {
+                retrieveLeads();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // Notify
+            }
+        });
+    }
+
+    private void updateStatus(String status) {
+        final ProgressDialog dialog = ProgressDialog.show(activity, "Wait...", "Updating status", true, true);
+
+        SaleAgent saleAgent = application.getSaleAgent();
+        saleAgent.setStatus(status);
+
+        Pipe<SaleAgent> pipe = application.getSaleAgentPipe(this);
+        pipe.save(saleAgent, new Callback<SaleAgent>() {
+            @Override
+            public void onSuccess(SaleAgent data) {
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                ((PushQuickstartActivity) activity).displayErrorMessage(e, dialog);
+            }
+        });
     }
 
 }

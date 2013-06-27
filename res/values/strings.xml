@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AG Push Quickstart</string>
+
+    <string-array name="status">
+        <item>STANDBY</item>
+        <item>WITH_CLIENT</item>
+        <item>PTO</item>
+    </string-array>
 </resources>

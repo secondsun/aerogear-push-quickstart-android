@@ -1,9 +1,12 @@
 package org.jboss.aerogear.android.unifiedpush.quickstart.model;
 
+import org.jboss.aerogear.android.RecordId;
+
 import java.io.Serializable;
 
 public class SaleAgent implements Serializable {
 
+    @RecordId
     private String id;
     private boolean enable;
     private String loginName;

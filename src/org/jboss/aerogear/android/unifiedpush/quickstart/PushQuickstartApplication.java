@@ -126,6 +126,11 @@ public class PushQuickstartApplication extends Application {
             leadPipeConfig.setEndpoint("leads");
             pipeline.pipe(Lead.class, leadPipeConfig);
 
+            PipeConfig saleAgentPipeConfig = new PipeConfig(serverURL, SaleAgent.class);
+            saleAgentPipeConfig.setName("agent");
+            saleAgentPipeConfig.setEndpoint("saleagents");
+            pipeline.pipe(SaleAgent.class, saleAgentPipeConfig);
+
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -134,6 +139,10 @@ public class PushQuickstartApplication extends Application {
 
     public Pipe<Lead> getLeadPipe(Fragment fragment) {
         return this.pipeline.get("lead", fragment, getApplicationContext());
+    }
+
+    public Pipe<SaleAgent> getSaleAgentPipe(Fragment fragment) {
+        return this.pipeline.get("agent", fragment, getApplicationContext());
     }
 
 }
