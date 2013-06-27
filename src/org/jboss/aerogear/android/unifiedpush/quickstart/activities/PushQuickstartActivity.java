@@ -32,7 +32,8 @@ import org.jboss.aerogear.android.unifiedpush.MessageHandler;
 import org.jboss.aerogear.android.unifiedpush.Registrar;
 import org.jboss.aerogear.android.unifiedpush.quickstart.PushQuickstartApplication;
 import org.jboss.aerogear.android.unifiedpush.quickstart.R;
-import org.jboss.aerogear.android.unifiedpush.quickstart.fragments.PushQuickstartLeadsFragments;
+import org.jboss.aerogear.android.unifiedpush.quickstart.fragments.PushQuickstartLeadsAcceptedFragments;
+import org.jboss.aerogear.android.unifiedpush.quickstart.fragments.PushQuickstartLeadsAvalableFragments;
 import org.jboss.aerogear.android.unifiedpush.quickstart.fragments.PushQuickstartLoginFragment;
 import org.jboss.aerogear.android.unifiedpush.quickstart.handler.NotifyingMessageHandler;
 import org.jboss.aerogear.android.unifiedpush.quickstart.model.MessageType;
@@ -42,7 +43,7 @@ import java.nio.charset.Charset;
 
 public class PushQuickstartActivity extends SherlockFragmentActivity implements MessageHandler {
 
-    private enum Display {LOGIN, LEADS}
+    private enum Display {LOGIN, AVALABLE_LEADS, LEADS_ACCEPTED}
 
     private PushQuickstartApplication application;
     private Display display;
@@ -55,7 +56,7 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
         application = (PushQuickstartApplication) getApplication();
 
         if(application.isLoggedIn()) {
-            displayLeadsScreen();
+            displayAvalableLeadsScreen();
         } else {
             displayLoginScreen();
         }
@@ -84,6 +85,12 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.leads_accepted:
+                displayLeadsAcceptedScreen();
+                break;
+            case R.id.avalable_leads:
+                displayAvalableLeadsScreen();
+                break;
             case R.id.refresh:
                 updateLeads();
                 break;
@@ -96,9 +103,9 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!Display.LEADS.equals(display)) {
-            menu.removeGroup(R.id.menuLead);
-        }
+        menu.setGroupVisible(R.id.menuAvalableLead, Display.AVALABLE_LEADS.equals(display));
+        menu.setGroupVisible(R.id.menuLeadsAccepted, Display.LEADS_ACCEPTED.equals(display));
+        menu.setGroupVisible(R.id.menuLogout, !Display.LOGIN.equals(display));
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -124,8 +131,12 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
         displayFragment(Display.LOGIN, new PushQuickstartLoginFragment());
     }
 
-    private void displayLeadsScreen() {
-        displayFragment(Display.LEADS, new PushQuickstartLeadsFragments());
+    private void displayAvalableLeadsScreen() {
+        displayFragment(Display.AVALABLE_LEADS, new PushQuickstartLeadsAvalableFragments());
+    }
+
+    private void displayLeadsAcceptedScreen() {
+        displayFragment(Display.LEADS_ACCEPTED, new PushQuickstartLeadsAcceptedFragments());
     }
 
     private void displayFragment(Display display, Fragment fragment) {
@@ -147,7 +158,7 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
                 SaleAgent saleAgent = new Gson().fromJson(response, SaleAgent.class);
                 application.setSaleAgente(saleAgent);
                 dialog.dismiss();
-                displayLeadsScreen();
+                displayAvalableLeadsScreen();
             }
 
             @Override
@@ -180,7 +191,7 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
     }
 
     private void updateLeads() {
-        PushQuickstartLeadsFragments leadsFragments = (PushQuickstartLeadsFragments)
+        PushQuickstartLeadsAvalableFragments leadsFragments = (PushQuickstartLeadsAvalableFragments)
                 getSupportFragmentManager().findFragmentById(R.id.frame);
         leadsFragments.retrieveLeads();
     }

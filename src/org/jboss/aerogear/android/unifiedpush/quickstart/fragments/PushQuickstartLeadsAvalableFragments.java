@@ -37,7 +37,7 @@ import java.util.List;
 
 import static android.R.layout.*;
 
-public class PushQuickstartLeadsFragments extends SherlockFragment {
+public class PushQuickstartLeadsAvalableFragments extends SherlockFragment {
 
     private PushQuickstartApplication application;
     private PushQuickstartActivity activity;
@@ -49,7 +49,7 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
         application = (PushQuickstartApplication) getActivity().getApplication();
         activity = (PushQuickstartActivity) getActivity();
 
-        final View view = inflater.inflate(R.layout.leads, null);
+        final View view = inflater.inflate(R.layout.available_leads, null);
 
         listView = (ListView) view.findViewById(R.id.leads);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

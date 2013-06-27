@@ -16,6 +16,8 @@
     <string name="updating_status">Updating status</string>
     <string name="error_message">An error occurred while attempting to perform this operation</string>
     <string name="updating_lead">Updating lead</string>
+    <string name="availables">Availables</string>
+    <string name="accepted">Accepted</string>
 
     <string-array name="status">
         <item>STANDBY</item>
