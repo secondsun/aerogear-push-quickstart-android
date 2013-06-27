@@ -20,11 +20,16 @@ import android.app.Application;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import org.jboss.aerogear.android.Callback;
+import org.jboss.aerogear.android.DataManager;
 import org.jboss.aerogear.android.Pipeline;
 import org.jboss.aerogear.android.authentication.AuthenticationConfig;
 import org.jboss.aerogear.android.authentication.AuthenticationModule;
 import org.jboss.aerogear.android.authentication.impl.Authenticator;
 import org.jboss.aerogear.android.http.HeaderAndBody;
+import org.jboss.aerogear.android.impl.datamanager.MemoryStorage;
+import org.jboss.aerogear.android.impl.datamanager.SQLStore;
+import org.jboss.aerogear.android.impl.datamanager.StoreConfig;
+import org.jboss.aerogear.android.impl.datamanager.StoreTypes;
 import org.jboss.aerogear.android.impl.pipeline.PipeConfig;
 import org.jboss.aerogear.android.pipeline.Pipe;
 import org.jboss.aerogear.android.unifiedpush.PushConfig;
@@ -47,6 +52,7 @@ public class PushQuickstartApplication extends Application {
 
     private AuthenticationModule authBackEnd;
     private Pipeline pipeline;
+    private SQLStore<Lead> localStore;
     private SaleAgent saleAgent;
 
     public SaleAgent getSaleAgent() {
@@ -64,6 +70,7 @@ public class PushQuickstartApplication extends Application {
         registerDeviceOnPushServer();
         configureBackendAuthentication();
         createApplicationPipes();
+        createLocalStorage();
     }
 
     private void registerDeviceOnPushServer() {
@@ -101,18 +108,6 @@ public class PushQuickstartApplication extends Application {
         authBackEnd = authenticator.auth("login", authenticationConfig);
     }
 
-    public void login(String username, String password, Callback<HeaderAndBody> callback) {
-        authBackEnd.login(username, password, callback);
-    }
-
-    public void logout(Callback<Void> callback) {
-        authBackEnd.logout(callback);
-    }
-
-    public boolean isLoggedIn() {
-        return authBackEnd.isLoggedIn();
-    }
-
     private void createApplicationPipes() {
 
         try {
@@ -135,6 +130,40 @@ public class PushQuickstartApplication extends Application {
 
     }
 
+    private void createLocalStorage() {
+
+        DataManager dataManager = new DataManager();
+
+        StoreConfig storeConfig = new StoreConfig();
+        storeConfig.setContext(getApplicationContext());
+        storeConfig.setType(StoreTypes.SQL);
+        storeConfig.setKlass(Lead.class);
+
+
+        localStore = (SQLStore) dataManager.store("leadStore", storeConfig);
+        localStore.open(new Callback() {
+            @Override
+            public void onSuccess(Object data) {
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+            }
+        });
+    }
+
+    public void login(String username, String password, Callback<HeaderAndBody> callback) {
+        authBackEnd.login(username, password, callback);
+    }
+
+    public void logout(Callback<Void> callback) {
+        authBackEnd.logout(callback);
+    }
+
+    public boolean isLoggedIn() {
+        return authBackEnd.isLoggedIn();
+    }
+
     public Pipe<Lead> getLeadPipe(Fragment fragment) {
         return this.pipeline.get("lead", fragment, getApplicationContext());
     }
@@ -143,4 +172,7 @@ public class PushQuickstartApplication extends Application {
         return this.pipeline.get("agent", fragment, getApplicationContext());
     }
 
+    public SQLStore<Lead> getLocalStore() {
+        return localStore;
+    }
 }

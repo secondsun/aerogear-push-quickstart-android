@@ -119,7 +119,7 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
         .show();
     }
 
-    private void acceptLead(Lead lead) {
+    private void acceptLead(final Lead lead) {
         final ProgressDialog dialog = activity.showProgressDialog(getString(R.string.updating_lead));
 
         lead.setSaleAgent(application.getSaleAgent().getId());
@@ -127,6 +127,7 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
         leadPipe.save(lead, new Callback<Lead>() {
             @Override
             public void onSuccess(Lead data) {
+                application.getLocalStore().save(lead);
                 dialog.dismiss();
             }
 
