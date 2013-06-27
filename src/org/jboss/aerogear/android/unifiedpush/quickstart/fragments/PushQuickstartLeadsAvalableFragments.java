@@ -70,7 +70,9 @@ public class PushQuickstartLeadsAvalableFragments extends SherlockFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String status = (String) adapterView.getItemAtPosition(position);
-                updateStatus(status);
+                if(!application.getSaleAgent().getStatus().equals(status)) {
+                    updateStatus(status);
+                }
             }
 
             @Override
