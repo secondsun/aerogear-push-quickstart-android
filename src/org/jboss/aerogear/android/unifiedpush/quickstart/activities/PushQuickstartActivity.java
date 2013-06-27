@@ -35,6 +35,7 @@ import org.jboss.aerogear.android.unifiedpush.quickstart.R;
 import org.jboss.aerogear.android.unifiedpush.quickstart.fragments.PushQuickstartLeadsFragments;
 import org.jboss.aerogear.android.unifiedpush.quickstart.fragments.PushQuickstartLoginFragment;
 import org.jboss.aerogear.android.unifiedpush.quickstart.handler.NotifyingMessageHandler;
+import org.jboss.aerogear.android.unifiedpush.quickstart.model.MessageType;
 import org.jboss.aerogear.android.unifiedpush.quickstart.model.SaleAgent;
 
 import java.nio.charset.Charset;
@@ -102,8 +103,13 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
     }
 
     public void onMessage(Context context, Bundle bundle) {
-        updateLeads();
-        Toast.makeText(this, bundle.getString("alert"), Toast.LENGTH_SHORT).show();
+        String messageType = bundle.getString("messageType");
+        if(MessageType.PUSHED.getType().equals(messageType) ) {
+            updateLeads();
+            Toast.makeText(this, bundle.getString("alert"), Toast.LENGTH_SHORT).show();
+        } else if(MessageType.ACCPET.getType().equals(messageType) ) {
+            updateLeads();
+        }
     }
 
     @Override
