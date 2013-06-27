@@ -84,7 +84,7 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
     }
 
     public void retrieveLeads() {
-        final ProgressDialog dialog = ProgressDialog.show(activity, getString(R.string.wait), getString(R.string.retreving_leads), true, true);
+        final ProgressDialog dialog = activity.showProgressDialog(getString(R.string.retreving_leads));
 
         Pipe<Lead> pipe = application.getLeadPipe(this);
         pipe.read(new Callback<List<Lead>>() {
@@ -136,7 +136,7 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
     }
 
     private void updateStatus(String status) {
-        final ProgressDialog dialog = ProgressDialog.show(activity, getString(R.string.wait), getString(R.string.updating_status), true, true);
+        final ProgressDialog dialog = activity.showProgressDialog(getString(R.string.updating_status));
 
         SaleAgent saleAgent = application.getSaleAgent();
         saleAgent.setStatus(status);

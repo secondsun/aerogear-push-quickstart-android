@@ -132,7 +132,7 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
     }
 
     public void login(String user, String pass) {
-        final ProgressDialog dialog = ProgressDialog.show(this, getString(R.string.wait), getString(R.string.loging), true, true);
+        final ProgressDialog dialog = showProgressDialog(getString(R.string.loging));
 
         application.login(user, pass, new Callback<HeaderAndBody>() {
             @Override
@@ -152,7 +152,7 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
     }
 
     public void logout() {
-        final ProgressDialog dialog = ProgressDialog.show(this, getString(R.string.wait), getString(R.string.wait), true, true);
+        final ProgressDialog dialog = showProgressDialog(getString(R.string.logout));
 
         application.logout(new Callback<Void>() {
             @Override
@@ -167,6 +167,10 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
             }
         });
 
+    }
+
+    public ProgressDialog showProgressDialog(String message) {
+        return ProgressDialog.show(this, getString(R.string.wait), message, true, true);
     }
 
     private void updateLeads() {
