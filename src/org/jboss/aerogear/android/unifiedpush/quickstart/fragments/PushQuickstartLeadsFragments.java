@@ -127,7 +127,7 @@ public class PushQuickstartLeadsFragments extends SherlockFragment {
         leadPipe.save(lead, new Callback<Lead>() {
             @Override
             public void onSuccess(Lead data) {
-                retrieveLeads();
+                dialog.dismiss();
             }
 
             @Override
