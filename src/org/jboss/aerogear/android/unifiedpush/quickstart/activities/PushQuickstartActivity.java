@@ -181,7 +181,7 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
 
     public void displayErrorMessage(Exception e, ProgressDialog dialog) {
         Log.e("Login", "An error occurrence", e);
-        Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.error_message), Toast.LENGTH_SHORT).show();
         dialog.dismiss();
     }
 
