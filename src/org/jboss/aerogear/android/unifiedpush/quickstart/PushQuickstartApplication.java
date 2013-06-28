@@ -26,7 +26,6 @@ import org.jboss.aerogear.android.authentication.AuthenticationConfig;
 import org.jboss.aerogear.android.authentication.AuthenticationModule;
 import org.jboss.aerogear.android.authentication.impl.Authenticator;
 import org.jboss.aerogear.android.http.HeaderAndBody;
-import org.jboss.aerogear.android.impl.datamanager.MemoryStorage;
 import org.jboss.aerogear.android.impl.datamanager.SQLStore;
 import org.jboss.aerogear.android.impl.datamanager.StoreConfig;
 import org.jboss.aerogear.android.impl.datamanager.StoreTypes;
