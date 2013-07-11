@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.unifiedpush.quickstart.activities;
+package org.jboss.aerogear.android.unifiedpush.aerodoc.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -30,14 +30,14 @@ import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.http.HeaderAndBody;
 import org.jboss.aerogear.android.unifiedpush.MessageHandler;
 import org.jboss.aerogear.android.unifiedpush.Registrar;
-import org.jboss.aerogear.android.unifiedpush.quickstart.PushQuickstartApplication;
-import org.jboss.aerogear.android.unifiedpush.quickstart.R;
-import org.jboss.aerogear.android.unifiedpush.quickstart.fragments.PushQuickstartLeadsAcceptedFragments;
-import org.jboss.aerogear.android.unifiedpush.quickstart.fragments.PushQuickstartLeadsAvalableFragments;
-import org.jboss.aerogear.android.unifiedpush.quickstart.fragments.PushQuickstartLoginFragment;
-import org.jboss.aerogear.android.unifiedpush.quickstart.handler.NotifyingMessageHandler;
-import org.jboss.aerogear.android.unifiedpush.quickstart.model.MessageType;
-import org.jboss.aerogear.android.unifiedpush.quickstart.model.SaleAgent;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.PushQuickstartApplication;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.R;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.PushQuickstartLeadsAcceptedFragments;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.PushQuickstartLeadsAvalableFragments;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.PushQuickstartLoginFragment;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.handler.NotifyingMessageHandler;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.model.MessageType;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
 
 import java.nio.charset.Charset;
 

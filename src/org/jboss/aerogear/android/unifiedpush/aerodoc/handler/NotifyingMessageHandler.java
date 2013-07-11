@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.unifiedpush.quickstart.handler;
+package org.jboss.aerogear.android.unifiedpush.aerodoc.handler;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -24,8 +24,8 @@ import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import org.jboss.aerogear.android.unifiedpush.MessageHandler;
-import org.jboss.aerogear.android.unifiedpush.quickstart.R;
-import org.jboss.aerogear.android.unifiedpush.quickstart.activities.PushQuickstartActivity;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.R;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.activities.PushQuickstartActivity;
 
 public class NotifyingMessageHandler implements MessageHandler {
 

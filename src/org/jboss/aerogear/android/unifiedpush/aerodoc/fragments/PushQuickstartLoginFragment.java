@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.unifiedpush.quickstart.fragments;
+package org.jboss.aerogear.android.unifiedpush.aerodoc.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,8 +23,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
-import org.jboss.aerogear.android.unifiedpush.quickstart.R;
-import org.jboss.aerogear.android.unifiedpush.quickstart.activities.PushQuickstartActivity;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.R;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.activities.PushQuickstartActivity;
 
 public class PushQuickstartLoginFragment extends SherlockFragment {
 

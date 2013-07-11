@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.unifiedpush.quickstart.fragments;
+package org.jboss.aerogear.android.unifiedpush.aerodoc.fragments;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -27,11 +27,11 @@ import android.widget.*;
 import com.actionbarsherlock.app.SherlockFragment;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.pipeline.Pipe;
-import org.jboss.aerogear.android.unifiedpush.quickstart.PushQuickstartApplication;
-import org.jboss.aerogear.android.unifiedpush.quickstart.R;
-import org.jboss.aerogear.android.unifiedpush.quickstart.activities.PushQuickstartActivity;
-import org.jboss.aerogear.android.unifiedpush.quickstart.model.Lead;
-import org.jboss.aerogear.android.unifiedpush.quickstart.model.SaleAgent;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.PushQuickstartApplication;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.R;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.activities.PushQuickstartActivity;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.model.Lead;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
 
 import java.util.List;
 

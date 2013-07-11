@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.unifiedpush.quickstart.model;
+package org.jboss.aerogear.android.unifiedpush.aerodoc.model;
 
 import org.jboss.aerogear.android.RecordId;
 
