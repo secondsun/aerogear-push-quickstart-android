@@ -24,14 +24,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.R;
-import org.jboss.aerogear.android.unifiedpush.aerodoc.activities.PushQuickstartActivity;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.activities.AeroDocActivity;
 
-public class PushQuickstartLoginFragment extends SherlockFragment {
+public class AeroDocLoginFragment extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        final PushQuickstartActivity activity = (PushQuickstartActivity) getActivity();
+        final AeroDocActivity activity = (AeroDocActivity) getActivity();
         final View view = inflater.inflate(R.layout.login, null);
 
         final TextView username = (TextView) view.findViewById(R.id.username);

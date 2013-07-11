@@ -27,9 +27,9 @@ import android.widget.*;
 import com.actionbarsherlock.app.SherlockFragment;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.pipeline.Pipe;
-import org.jboss.aerogear.android.unifiedpush.aerodoc.PushQuickstartApplication;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.AeroDocApplication;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.R;
-import org.jboss.aerogear.android.unifiedpush.aerodoc.activities.PushQuickstartActivity;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.activities.AeroDocActivity;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.model.Lead;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
 
@@ -37,17 +37,17 @@ import java.util.List;
 
 import static android.R.layout.*;
 
-public class PushQuickstartLeadsAvalableFragments extends SherlockFragment {
+public class AeroDocLeadsAvalableFragments extends SherlockFragment {
 
-    private PushQuickstartApplication application;
-    private PushQuickstartActivity activity;
+    private AeroDocApplication application;
+    private AeroDocActivity activity;
     private ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        application = (PushQuickstartApplication) getActivity().getApplication();
-        activity = (PushQuickstartActivity) getActivity();
+        application = (AeroDocApplication) getActivity().getApplication();
+        activity = (AeroDocActivity) getActivity();
 
         final View view = inflater.inflate(R.layout.available_leads, null);
 

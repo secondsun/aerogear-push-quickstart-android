@@ -30,24 +30,24 @@ import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.http.HeaderAndBody;
 import org.jboss.aerogear.android.unifiedpush.MessageHandler;
 import org.jboss.aerogear.android.unifiedpush.Registrar;
-import org.jboss.aerogear.android.unifiedpush.aerodoc.PushQuickstartApplication;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.AeroDocApplication;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.R;
-import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.PushQuickstartLeadsAcceptedFragments;
-import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.PushQuickstartLeadsAvalableFragments;
-import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.PushQuickstartLoginFragment;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.AeroDocLeadsAcceptedFragments;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.AeroDocLeadsAvalableFragments;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.AeroDocLoginFragment;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.handler.NotifyingMessageHandler;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.model.MessageType;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
 
 import java.nio.charset.Charset;
 
-public class PushQuickstartActivity extends SherlockFragmentActivity implements MessageHandler {
+public class AeroDocActivity extends SherlockFragmentActivity implements MessageHandler {
 
     private enum Display {
         LOGIN, AVALABLE_LEADS, LEADS_ACCEPTED
     }
 
-    private PushQuickstartApplication application;
+    private AeroDocApplication application;
     private Display display;
 
     @Override
@@ -55,7 +55,7 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        application = (PushQuickstartApplication) getApplication();
+        application = (AeroDocApplication) getApplication();
 
         if (application.isLoggedIn()) {
             displayAvalableLeadsScreen();
@@ -130,15 +130,15 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
     }
 
     private void displayLoginScreen() {
-        displayFragment(Display.LOGIN, new PushQuickstartLoginFragment());
+        displayFragment(Display.LOGIN, new AeroDocLoginFragment());
     }
 
     private void displayAvalableLeadsScreen() {
-        displayFragment(Display.AVALABLE_LEADS, new PushQuickstartLeadsAvalableFragments());
+        displayFragment(Display.AVALABLE_LEADS, new AeroDocLeadsAvalableFragments());
     }
 
     private void displayLeadsAcceptedScreen() {
-        displayFragment(Display.LEADS_ACCEPTED, new PushQuickstartLeadsAcceptedFragments());
+        displayFragment(Display.LEADS_ACCEPTED, new AeroDocLeadsAcceptedFragments());
     }
 
     private void displayFragment(Display display, Fragment fragment) {
@@ -193,7 +193,7 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
     }
 
     private void updateLeads() {
-        PushQuickstartLeadsAvalableFragments leadsFragments = (PushQuickstartLeadsAvalableFragments)
+        AeroDocLeadsAvalableFragments leadsFragments = (AeroDocLeadsAvalableFragments)
                 getSupportFragmentManager().findFragmentById(R.id.frame);
         leadsFragments.retrieveLeads();
     }

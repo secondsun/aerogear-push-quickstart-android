@@ -39,9 +39,9 @@ import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class PushQuickstartApplication extends Application {
+public class AeroDocApplication extends Application {
 
-    private static final String TAG = PushQuickstartApplication.class.getSimpleName();
+    private static final String TAG = AeroDocApplication.class.getSimpleName();
 
     private static final String BASE_BACKEND_URL = "";
     private static final String REGISTER_SERVER_URL = "";
