@@ -70,7 +70,7 @@ public class PushQuickstartLeadsAvalableFragments extends SherlockFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String status = (String) adapterView.getItemAtPosition(position);
-                if(!application.getSaleAgent().getStatus().equals(status)) {
+                if (!application.getSaleAgent().getStatus().equals(status)) {
                     updateStatus(status);
                 }
             }
@@ -106,19 +106,19 @@ public class PushQuickstartLeadsAvalableFragments extends SherlockFragment {
 
     private void displayLead(final Lead lead) {
         new AlertDialog.Builder(activity)
-            .setMessage(lead.getName())
-            .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    acceptLead(lead);
-                }
-            })
-            .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            })
-        .create()
-        .show();
+                .setMessage(lead.getName())
+                .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        acceptLead(lead);
+                    }
+                })
+                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 
     private void acceptLead(final Lead lead) {

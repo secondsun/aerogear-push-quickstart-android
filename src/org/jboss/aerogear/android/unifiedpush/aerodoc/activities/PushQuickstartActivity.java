@@ -43,7 +43,9 @@ import java.nio.charset.Charset;
 
 public class PushQuickstartActivity extends SherlockFragmentActivity implements MessageHandler {
 
-    private enum Display {LOGIN, AVALABLE_LEADS, LEADS_ACCEPTED}
+    private enum Display {
+        LOGIN, AVALABLE_LEADS, LEADS_ACCEPTED
+    }
 
     private PushQuickstartApplication application;
     private Display display;
@@ -55,7 +57,7 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
 
         application = (PushQuickstartApplication) getApplication();
 
-        if(application.isLoggedIn()) {
+        if (application.isLoggedIn()) {
             displayAvalableLeadsScreen();
         } else {
             displayLoginScreen();
@@ -85,18 +87,18 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.leads_accepted:
-                displayLeadsAcceptedScreen();
-                break;
-            case R.id.avalable_leads:
-                displayAvalableLeadsScreen();
-                break;
-            case R.id.refresh:
-                updateLeads();
-                break;
-            case R.id.logout:
-                logout();
-                break;
+        case R.id.leads_accepted:
+            displayLeadsAcceptedScreen();
+            break;
+        case R.id.avalable_leads:
+            displayAvalableLeadsScreen();
+            break;
+        case R.id.refresh:
+            updateLeads();
+            break;
+        case R.id.logout:
+            logout();
+            break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -111,10 +113,10 @@ public class PushQuickstartActivity extends SherlockFragmentActivity implements 
 
     public void onMessage(Context context, Bundle bundle) {
         String messageType = bundle.getString("messageType");
-        if(MessageType.PUSHED.getType().equals(messageType) ) {
+        if (MessageType.PUSHED.getType().equals(messageType)) {
             updateLeads();
             Toast.makeText(this, bundle.getString("alert"), Toast.LENGTH_SHORT).show();
-        } else if(MessageType.ACCPET.getType().equals(messageType) ) {
+        } else if (MessageType.ACCPET.getType().equals(messageType)) {
             updateLeads();
         }
     }

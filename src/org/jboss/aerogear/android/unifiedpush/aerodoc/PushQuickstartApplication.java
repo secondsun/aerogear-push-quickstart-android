@@ -138,7 +138,6 @@ public class PushQuickstartApplication extends Application {
         storeConfig.setType(StoreTypes.SQL);
         storeConfig.setKlass(Lead.class);
 
-
         localStore = (SQLStore) dataManager.store("leadStore", storeConfig);
         localStore.open(new Callback() {
             @Override
