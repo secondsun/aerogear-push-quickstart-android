@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.unifiedpush.quickstart.fragments;
+package org.jboss.aerogear.android.unifiedpush.aerodoc.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -26,28 +26,28 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.pipeline.Pipe;
-import org.jboss.aerogear.android.unifiedpush.quickstart.PushQuickstartApplication;
-import org.jboss.aerogear.android.unifiedpush.quickstart.R;
-import org.jboss.aerogear.android.unifiedpush.quickstart.activities.PushQuickstartActivity;
-import org.jboss.aerogear.android.unifiedpush.quickstart.model.Lead;
-import org.jboss.aerogear.android.unifiedpush.quickstart.model.SaleAgent;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.AeroDocApplication;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.R;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.activities.AeroDocActivity;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.model.Lead;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import static android.R.layout.simple_list_item_1;
 
-public class PushQuickstartLeadsAcceptedFragments extends SherlockFragment {
+public class AeroDocLeadsAcceptedFragments extends SherlockFragment {
 
-    private PushQuickstartApplication application;
-    private PushQuickstartActivity activity;
+    private AeroDocApplication application;
+    private AeroDocActivity activity;
     private ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        application = (PushQuickstartApplication) getActivity().getApplication();
-        activity = (PushQuickstartActivity) getActivity();
+        application = (AeroDocApplication) getActivity().getApplication();
+        activity = (AeroDocActivity) getActivity();
 
         final View view = inflater.inflate(R.layout.leads_accepted, null);
 

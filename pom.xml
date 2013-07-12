@@ -21,10 +21,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.aerogear.push</groupId>
-    <artifactId>quickstart-android</artifactId>
+    <artifactId>aerodoc-android</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>apk</packaging>
-    <name>AeroGear Push Quickstart Android</name>
+    <name>AeroDoc</name>
+    <url>http://aerogear.org</url>
+
+    <parent>
+        <groupId>org.jboss.aerogear</groupId>
+        <artifactId>aerogear-parent</artifactId>
+        <version>0.1.0</version>
+    </parent>
 
     <licenses>
         <license>
@@ -165,20 +172,6 @@
                     </proguard>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.mycila.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>
-                <version>1.9.0</version>
-                <configuration>
-                    <header>${project.basedir}/support/license_header.txt</header>
-                    <includes>
-                        <include>src/**</include>
-                        <include>test/**</include>
-                    </includes>
-                    <strictCheck>true</strictCheck>
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
 

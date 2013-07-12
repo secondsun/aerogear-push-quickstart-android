@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.unifiedpush.quickstart.fragments;
+package org.jboss.aerogear.android.unifiedpush.aerodoc.fragments;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -27,27 +27,27 @@ import android.widget.*;
 import com.actionbarsherlock.app.SherlockFragment;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.pipeline.Pipe;
-import org.jboss.aerogear.android.unifiedpush.quickstart.PushQuickstartApplication;
-import org.jboss.aerogear.android.unifiedpush.quickstart.R;
-import org.jboss.aerogear.android.unifiedpush.quickstart.activities.PushQuickstartActivity;
-import org.jboss.aerogear.android.unifiedpush.quickstart.model.Lead;
-import org.jboss.aerogear.android.unifiedpush.quickstart.model.SaleAgent;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.AeroDocApplication;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.R;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.activities.AeroDocActivity;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.model.Lead;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
 
 import java.util.List;
 
 import static android.R.layout.*;
 
-public class PushQuickstartLeadsAvalableFragments extends SherlockFragment {
+public class AeroDocLeadsAvalableFragments extends SherlockFragment {
 
-    private PushQuickstartApplication application;
-    private PushQuickstartActivity activity;
+    private AeroDocApplication application;
+    private AeroDocActivity activity;
     private ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        application = (PushQuickstartApplication) getActivity().getApplication();
-        activity = (PushQuickstartActivity) getActivity();
+        application = (AeroDocApplication) getActivity().getApplication();
+        activity = (AeroDocActivity) getActivity();
 
         final View view = inflater.inflate(R.layout.available_leads, null);
 
@@ -70,7 +70,7 @@ public class PushQuickstartLeadsAvalableFragments extends SherlockFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String status = (String) adapterView.getItemAtPosition(position);
-                if(!application.getSaleAgent().getStatus().equals(status)) {
+                if (!application.getSaleAgent().getStatus().equals(status)) {
                     updateStatus(status);
                 }
             }
@@ -106,19 +106,19 @@ public class PushQuickstartLeadsAvalableFragments extends SherlockFragment {
 
     private void displayLead(final Lead lead) {
         new AlertDialog.Builder(activity)
-            .setMessage(lead.getName())
-            .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    acceptLead(lead);
-                }
-            })
-            .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            })
-        .create()
-        .show();
+                .setMessage(lead.getName())
+                .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        acceptLead(lead);
+                    }
+                })
+                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 
     private void acceptLead(final Lead lead) {

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.unifiedpush.quickstart;
+package org.jboss.aerogear.android.unifiedpush.aerodoc;
 
 import android.app.Application;
 import android.support.v4.app.Fragment;
@@ -33,15 +33,15 @@ import org.jboss.aerogear.android.impl.pipeline.PipeConfig;
 import org.jboss.aerogear.android.pipeline.Pipe;
 import org.jboss.aerogear.android.unifiedpush.PushConfig;
 import org.jboss.aerogear.android.unifiedpush.Registrar;
-import org.jboss.aerogear.android.unifiedpush.quickstart.model.Lead;
-import org.jboss.aerogear.android.unifiedpush.quickstart.model.SaleAgent;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.model.Lead;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class PushQuickstartApplication extends Application {
+public class AeroDocApplication extends Application {
 
-    private static final String TAG = PushQuickstartApplication.class.getSimpleName();
+    private static final String TAG = AeroDocApplication.class.getSimpleName();
 
     private static final String BASE_BACKEND_URL = "";
     private static final String REGISTER_SERVER_URL = "";
@@ -137,7 +137,6 @@ public class PushQuickstartApplication extends Application {
         storeConfig.setContext(getApplicationContext());
         storeConfig.setType(StoreTypes.SQL);
         storeConfig.setKlass(Lead.class);
-
 
         localStore = (SQLStore) dataManager.store("leadStore", storeConfig);
         localStore.open(new Callback() {

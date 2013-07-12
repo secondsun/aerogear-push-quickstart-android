@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.aerogear.android.unifiedpush.quickstart.fragments;
+package org.jboss.aerogear.android.unifiedpush.aerodoc.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,15 +23,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
-import org.jboss.aerogear.android.unifiedpush.quickstart.R;
-import org.jboss.aerogear.android.unifiedpush.quickstart.activities.PushQuickstartActivity;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.R;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.activities.AeroDocActivity;
 
-public class PushQuickstartLoginFragment extends SherlockFragment {
+public class AeroDocLoginFragment extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        final PushQuickstartActivity activity = (PushQuickstartActivity) getActivity();
+        final AeroDocActivity activity = (AeroDocActivity) getActivity();
         final View view = inflater.inflate(R.layout.login, null);
 
         final TextView username = (TextView) view.findViewById(R.id.username);
