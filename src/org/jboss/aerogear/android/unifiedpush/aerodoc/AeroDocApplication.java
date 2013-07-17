@@ -90,6 +90,7 @@ public class AeroDocApplication extends Application {
             r.register(getApplicationContext(), pushConfig, new Callback<Void>() {
                 @Override
                 public void onSuccess(Void ignore) {
+                    Log.i(TAG, "Device registered");
                 }
 
                 @Override
