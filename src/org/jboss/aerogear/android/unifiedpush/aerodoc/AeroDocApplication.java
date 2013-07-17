@@ -19,6 +19,7 @@ package org.jboss.aerogear.android.unifiedpush.aerodoc;
 import android.app.Application;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.widget.Toast;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.DataManager;
 import org.jboss.aerogear.android.Pipeline;
@@ -44,9 +45,11 @@ public class AeroDocApplication extends Application {
     private static final String TAG = AeroDocApplication.class.getSimpleName();
 
     private static final String BASE_BACKEND_URL = "";
+
     private static final String REGISTER_SERVER_URL = "";
     private static final String SENDER_ID = "";
-    private static final String MOBILE_VARIANT_ID = "";
+    private static final String VARIANT_ID = "";
+    private static final String SECRET = "";
     private static final String ALIAS = "";
 
     private AuthenticationModule authBackEnd;
@@ -67,6 +70,7 @@ public class AeroDocApplication extends Application {
         super.onCreate();
 
         registerDeviceOnPushServer();
+
         configureBackendAuthentication();
         createApplicationPipes();
         createLocalStorage();
@@ -79,7 +83,8 @@ public class AeroDocApplication extends Application {
             final URL registerURL = new URL(REGISTER_SERVER_URL);
             final Registrar r = new Registrar(registerURL);
             PushConfig pushConfig = new PushConfig(SENDER_ID);
-            pushConfig.setMobileVariantId(MOBILE_VARIANT_ID);
+            pushConfig.setVariantID(VARIANT_ID);
+            pushConfig.setSecret(SECRET);
             pushConfig.setAlias(ALIAS);
 
             r.register(getApplicationContext(), pushConfig, new Callback<Void>() {
