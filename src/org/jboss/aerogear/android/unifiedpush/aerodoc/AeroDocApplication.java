@@ -94,8 +94,9 @@ public class AeroDocApplication extends Application {
                 }
 
                 @Override
-                public void onFailure(Exception exception) {
-                    Log.e(TAG, exception.getMessage(), exception);
+                public void onFailure(Exception e) {
+                    Log.e(TAG, e.getMessage(), e);
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
 
