@@ -66,7 +66,7 @@ public class AeroDocLeadsAcceptedFragments extends SherlockFragment {
     }
 
     private void updateStatus(String status) {
-        final ProgressDialog dialog = activity.showProgressDialog(getString(R.string.updating_status));
+        final ProgressDialog dialog = application.showProgressDialog(activity, getString(R.string.updating_status));
 
         SaleAgent saleAgent = application.getSaleAgent();
         saleAgent.setStatus(status);
@@ -80,7 +80,7 @@ public class AeroDocLeadsAcceptedFragments extends SherlockFragment {
 
             @Override
             public void onFailure(Exception e) {
-                activity.displayErrorMessage(e, dialog);
+                application.displayErrorMessage(e, dialog);
             }
         });
     }

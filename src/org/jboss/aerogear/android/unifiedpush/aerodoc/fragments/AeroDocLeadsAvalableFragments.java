@@ -23,7 +23,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
 import com.actionbarsherlock.app.SherlockFragment;
 import org.jboss.aerogear.android.Callback;
 import org.jboss.aerogear.android.pipeline.Pipe;
@@ -35,7 +38,7 @@ import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
 
 import java.util.List;
 
-import static android.R.layout.*;
+import static android.R.layout.simple_list_item_1;
 
 public class AeroDocLeadsAvalableFragments extends SherlockFragment {
 
@@ -86,7 +89,7 @@ public class AeroDocLeadsAvalableFragments extends SherlockFragment {
     }
 
     public void retrieveLeads() {
-        final ProgressDialog dialog = activity.showProgressDialog(getString(R.string.retreving_leads));
+        final ProgressDialog dialog = application.showProgressDialog(activity, getString(R.string.retreving_leads));
 
         Pipe<Lead> pipe = application.getLeadPipe(this);
         pipe.read(new Callback<List<Lead>>() {
@@ -99,7 +102,7 @@ public class AeroDocLeadsAvalableFragments extends SherlockFragment {
 
             @Override
             public void onFailure(Exception e) {
-                activity.displayErrorMessage(e, dialog);
+                application.displayErrorMessage(e, dialog);
             }
         });
     }
@@ -122,7 +125,7 @@ public class AeroDocLeadsAvalableFragments extends SherlockFragment {
     }
 
     private void acceptLead(final Lead lead) {
-        final ProgressDialog dialog = activity.showProgressDialog(getString(R.string.updating_lead));
+        final ProgressDialog dialog = application.showProgressDialog(activity, getString(R.string.updating_lead));
 
         lead.setSaleAgent(application.getSaleAgent().getId());
         Pipe<Lead> leadPipe = application.getLeadPipe(this);
@@ -135,13 +138,13 @@ public class AeroDocLeadsAvalableFragments extends SherlockFragment {
 
             @Override
             public void onFailure(Exception e) {
-                activity.displayErrorMessage(e, dialog);
+                application.displayErrorMessage(e, dialog);
             }
         });
     }
 
     private void updateStatus(String status) {
-        final ProgressDialog dialog = activity.showProgressDialog(getString(R.string.updating_status));
+        final ProgressDialog dialog = application.showProgressDialog(activity, getString(R.string.updating_status));
 
         SaleAgent saleAgent = application.getSaleAgent();
         saleAgent.setStatus(status);
@@ -155,7 +158,7 @@ public class AeroDocLeadsAvalableFragments extends SherlockFragment {
 
             @Override
             public void onFailure(Exception e) {
-                activity.displayErrorMessage(e, dialog);
+                application.displayErrorMessage(e, dialog);
             }
         });
     }

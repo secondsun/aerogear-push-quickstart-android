@@ -18,33 +18,27 @@ package org.jboss.aerogear.android.unifiedpush.aerodoc.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.gson.Gson;
 import org.jboss.aerogear.android.Callback;
-import org.jboss.aerogear.android.http.HeaderAndBody;
 import org.jboss.aerogear.android.unifiedpush.MessageHandler;
 import org.jboss.aerogear.android.unifiedpush.Registrar;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.AeroDocApplication;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.R;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.AeroDocLeadsAcceptedFragments;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.AeroDocLeadsAvalableFragments;
-import org.jboss.aerogear.android.unifiedpush.aerodoc.fragments.AeroDocLoginFragment;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.handler.NotifyingMessageHandler;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.model.MessageType;
-import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
-
-import java.nio.charset.Charset;
 
 public class AeroDocActivity extends SherlockFragmentActivity implements MessageHandler {
 
     private enum Display {
-        LOGIN, AVALABLE_LEADS, LEADS_ACCEPTED
+        AVALABLE_LEADS, LEADS_ACCEPTED
     }
 
     private AeroDocApplication application;
@@ -107,7 +101,6 @@ public class AeroDocActivity extends SherlockFragmentActivity implements Message
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.setGroupVisible(R.id.menuAvalableLead, Display.AVALABLE_LEADS.equals(display));
         menu.setGroupVisible(R.id.menuLeadsAccepted, Display.LEADS_ACCEPTED.equals(display));
-        menu.setGroupVisible(R.id.menuLogout, !Display.LOGIN.equals(display));
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -130,7 +123,8 @@ public class AeroDocActivity extends SherlockFragmentActivity implements Message
     }
 
     private void displayLoginScreen() {
-        displayFragment(Display.LOGIN, new AeroDocLoginFragment());
+        startActivity(new Intent(this, AeroDocLoginActivity.class));
+        finish();
     }
 
     private void displayAvalableLeadsScreen() {
@@ -150,28 +144,8 @@ public class AeroDocActivity extends SherlockFragmentActivity implements Message
                 .commit();
     }
 
-    public void login(String user, String pass) {
-        final ProgressDialog dialog = showProgressDialog(getString(R.string.loging));
-
-        application.login(user, pass, new Callback<HeaderAndBody>() {
-            @Override
-            public void onSuccess(HeaderAndBody data) {
-                String response = new String(data.getBody(), Charset.forName("UTF-8"));
-                SaleAgent saleAgent = new Gson().fromJson(response, SaleAgent.class);
-                application.setSaleAgente(saleAgent);
-                dialog.dismiss();
-                displayAvalableLeadsScreen();
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                displayErrorMessage(e, dialog);
-            }
-        });
-    }
-
     public void logout() {
-        final ProgressDialog dialog = showProgressDialog(getString(R.string.logout));
+        final ProgressDialog dialog = application.showProgressDialog(this, getString(R.string.logout));
 
         application.logout(new Callback<Void>() {
             @Override
@@ -182,26 +156,15 @@ public class AeroDocActivity extends SherlockFragmentActivity implements Message
 
             @Override
             public void onFailure(Exception e) {
-                displayErrorMessage(e, dialog);
+                application.displayErrorMessage(e, dialog);
             }
         });
-
-    }
-
-    public ProgressDialog showProgressDialog(String message) {
-        return ProgressDialog.show(this, getString(R.string.wait), message, true, true);
     }
 
     private void updateLeads() {
         AeroDocLeadsAvalableFragments leadsFragments = (AeroDocLeadsAvalableFragments)
                 getSupportFragmentManager().findFragmentById(R.id.frame);
         leadsFragments.retrieveLeads();
-    }
-
-    public void displayErrorMessage(Exception e, ProgressDialog dialog) {
-        Log.e("Login", "An error occurrence", e);
-        Toast.makeText(this, getString(R.string.error_message), Toast.LENGTH_SHORT).show();
-        dialog.dismiss();
     }
 
 }

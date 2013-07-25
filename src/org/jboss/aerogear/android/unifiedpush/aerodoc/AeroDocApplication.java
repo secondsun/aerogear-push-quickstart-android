@@ -17,6 +17,8 @@
 package org.jboss.aerogear.android.unifiedpush.aerodoc;
 
 import android.app.Application;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
@@ -180,4 +182,16 @@ public class AeroDocApplication extends Application {
     public SQLStore<Lead> getLocalStore() {
         return localStore;
     }
+
+    public ProgressDialog showProgressDialog(Context context, String message) {
+        return ProgressDialog.show(context, getString(R.string.wait), message, true, true);
+    }
+
+    public void displayErrorMessage(Exception e, ProgressDialog dialog) {
+        Log.e("Login", "An error occurrence", e);
+        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        dialog.dismiss();
+    }
+
+
 }
