@@ -150,7 +150,7 @@ public class AeroDocActivity extends SherlockFragmentActivity implements Message
                 .commit();
     }
 
-    public void login(String user, String pass) {
+    public void login(final String user, final String pass) {
         final ProgressDialog dialog = showProgressDialog(getString(R.string.loging));
 
         application.login(user, pass, new Callback<HeaderAndBody>() {
@@ -159,6 +159,7 @@ public class AeroDocActivity extends SherlockFragmentActivity implements Message
                 String response = new String(data.getBody(), Charset.forName("UTF-8"));
                 SaleAgent saleAgent = new Gson().fromJson(response, SaleAgent.class);
                 application.setSaleAgente(saleAgent);
+                application.registerDeviceOnPushServer(user);
                 dialog.dismiss();
                 displayAvalableLeadsScreen();
             }

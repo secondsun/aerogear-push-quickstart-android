@@ -50,7 +50,6 @@ public class AeroDocApplication extends Application {
     private static final String SENDER_ID = "";
     private static final String VARIANT_ID = "";
     private static final String SECRET = "";
-    private static final String ALIAS = "";
 
     private AuthenticationModule authBackEnd;
     private Pipeline pipeline;
@@ -69,14 +68,12 @@ public class AeroDocApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        registerDeviceOnPushServer();
-
         configureBackendAuthentication();
         createApplicationPipes();
         createLocalStorage();
     }
 
-    private void registerDeviceOnPushServer() {
+    public void registerDeviceOnPushServer(String alias) {
 
         try {
 
@@ -85,7 +82,7 @@ public class AeroDocApplication extends Application {
             PushConfig pushConfig = new PushConfig(SENDER_ID);
             pushConfig.setVariantID(VARIANT_ID);
             pushConfig.setSecret(SECRET);
-            pushConfig.setAlias(ALIAS);
+            pushConfig.setAlias(alias);
 
             r.register(getApplicationContext(), pushConfig, new Callback<Void>() {
                 @Override
