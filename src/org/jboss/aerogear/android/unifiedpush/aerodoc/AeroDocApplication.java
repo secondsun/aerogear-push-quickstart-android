@@ -68,8 +68,6 @@ public class AeroDocApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        registerDeviceOnPushServer(null);
-
         configureBackendAuthentication();
         createApplicationPipes();
         createLocalStorage();
