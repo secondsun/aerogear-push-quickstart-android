@@ -99,7 +99,8 @@ public class AeroDocLeadsAvalableFragments extends SherlockFragment {
 
             @Override
             public void onFailure(Exception e) {
-                activity.displayErrorMessage(e, dialog);
+                activity.displayErrorMessage(e);
+                dialog.dismiss();
             }
         });
     }
@@ -135,7 +136,8 @@ public class AeroDocLeadsAvalableFragments extends SherlockFragment {
 
             @Override
             public void onFailure(Exception e) {
-                activity.displayErrorMessage(e, dialog);
+                activity.displayErrorMessage(e);
+                dialog.dismiss();
             }
         });
     }
@@ -155,7 +157,8 @@ public class AeroDocLeadsAvalableFragments extends SherlockFragment {
 
             @Override
             public void onFailure(Exception e) {
-                activity.displayErrorMessage(e, dialog);
+                activity.displayErrorMessage(e);
+                dialog.dismiss();
             }
         });
     }

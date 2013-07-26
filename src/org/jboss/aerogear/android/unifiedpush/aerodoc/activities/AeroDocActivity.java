@@ -40,6 +40,8 @@ import org.jboss.aerogear.android.unifiedpush.aerodoc.model.MessageType;
 import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
 
 import java.nio.charset.Charset;
+import org.jboss.aerogear.android.pipeline.AbstractActivityCallback;
+import org.jboss.aerogear.android.pipeline.support.AbstractFragmentActivityCallback;
 
 public class AeroDocActivity extends SherlockFragmentActivity implements MessageHandler {
 
@@ -49,7 +51,8 @@ public class AeroDocActivity extends SherlockFragmentActivity implements Message
 
     private AeroDocApplication application;
     private Display display;
-
+    private ProgressDialog dialog = null;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,44 +154,15 @@ public class AeroDocActivity extends SherlockFragmentActivity implements Message
     }
 
     public void login(final String user, final String pass) {
-        final ProgressDialog dialog = showProgressDialog(getString(R.string.loging));
-
-        application.login(user, pass, new Callback<HeaderAndBody>() {
-            @Override
-            public void onSuccess(HeaderAndBody data) {
-                String response = new String(data.getBody(), Charset.forName("UTF-8"));
-                SaleAgent saleAgent = new Gson().fromJson(response, SaleAgent.class);
-                application.setSaleAgente(saleAgent);
-                application.registerDeviceOnPushServer(user);
-                dialog.dismiss();
-                displayAvalableLeadsScreen();
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                displayErrorMessage(e, dialog);
-            }
-        });
+        dialog = showProgressDialog(getString(R.string.loging));
+        application.login(user, pass, new LoginCallback(user), this);
     }
 
     public void logout() {
-        final ProgressDialog dialog = showProgressDialog(getString(R.string.logout));
-
-        application.logout(new Callback<Void>() {
-            @Override
-            public void onSuccess(Void data) {
-                displayLoginScreen();
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                displayErrorMessage(e, dialog);
-            }
-        });
-
+        dialog = showProgressDialog(getString(R.string.logout));
+        application.logout(new LogoutCallback(), this);
     }
-
+    
     public ProgressDialog showProgressDialog(String message) {
         return ProgressDialog.show(this, getString(R.string.wait), message, true, true);
     }
@@ -199,10 +173,67 @@ public class AeroDocActivity extends SherlockFragmentActivity implements Message
         leadsFragments.retrieveLeads();
     }
 
-    public void displayErrorMessage(Exception e, ProgressDialog dialog) {
+    private void dismissDialog() {
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+    }
+    
+    public void displayErrorMessage(Exception e) {
         Log.e("Login", "An error occurrence", e);
         Toast.makeText(this, getString(R.string.error_message), Toast.LENGTH_SHORT).show();
-        dialog.dismiss();
+    }
+    
+    private static class LogoutCallback extends AbstractFragmentActivityCallback<Void> {
+
+        private static final long serialVersionUID = 1L;
+        
+        public LogoutCallback(Object... params) {
+            super(serialVersionUID);
+        }
+        
+        @Override
+        public void onSuccess(Void data) {
+            AeroDocActivity activity = (AeroDocActivity) getFragmentActivity();
+            activity.displayLoginScreen();
+            activity.dismissDialog();
+        }
+
+        @Override
+        public void onFailure(Exception e) {
+            AeroDocActivity activity = (AeroDocActivity) getFragmentActivity();
+            activity.displayErrorMessage(e);
+            activity.dismissDialog();
+        }
     }
 
+    private static class LoginCallback extends AbstractFragmentActivityCallback<HeaderAndBody> {
+
+        final String user;
+        private static final long serialVersionUID = 1L;
+        
+        public LoginCallback(String user) {
+            super(serialVersionUID, user);
+            this.user = user;
+        }
+        
+        @Override
+        public void onSuccess(HeaderAndBody data) {
+            AeroDocActivity activity = (AeroDocActivity) getFragmentActivity();
+            String response = new String(data.getBody(), Charset.forName("UTF-8"));
+            SaleAgent saleAgent = new Gson().fromJson(response, SaleAgent.class);
+            ((AeroDocApplication)activity.getApplication()).setSaleAgente(saleAgent);
+            ((AeroDocApplication)activity.getApplication()).registerDeviceOnPushServer(user);
+            activity.dismissDialog();
+            activity.displayAvalableLeadsScreen();
+        }
+
+        @Override
+        public void onFailure(Exception e) {                
+            AeroDocActivity activity = (AeroDocActivity) getFragmentActivity();
+            activity.displayErrorMessage(e);
+            activity.dismissDialog();
+        }
+    }
+    
 }

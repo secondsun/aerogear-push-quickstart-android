@@ -39,6 +39,7 @@ import org.jboss.aerogear.android.unifiedpush.aerodoc.model.SaleAgent;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.jboss.aerogear.android.unifiedpush.aerodoc.activities.AeroDocActivity;
 
 public class AeroDocApplication extends Application {
 
@@ -51,11 +52,12 @@ public class AeroDocApplication extends Application {
     private static final String VARIANT_ID = "";
     private static final String SECRET = "";
 
-    private AuthenticationModule authBackEnd;
     private Pipeline pipeline;
     private SQLStore<Lead> localStore;
     private SaleAgent saleAgent;
-
+    
+    private final Authenticator authenticator = new Authenticator(BASE_BACKEND_URL);
+    
     public SaleAgent getSaleAgent() {
         return saleAgent;
     }
@@ -104,11 +106,11 @@ public class AeroDocApplication extends Application {
     }
 
     private void configureBackendAuthentication() {
-        Authenticator authenticator = new Authenticator(BASE_BACKEND_URL);
+        
         AuthenticationConfig authenticationConfig = new AuthenticationConfig();
         authenticationConfig.setLoginEndpoint("/login");
         authenticationConfig.setLogoutEndpoint("/logout");
-        authBackEnd = authenticator.auth("login", authenticationConfig);
+        authenticator.auth("login", authenticationConfig);
     }
 
     private void createApplicationPipes() {
@@ -154,15 +156,18 @@ public class AeroDocApplication extends Application {
         });
     }
 
-    public void login(String username, String password, Callback<HeaderAndBody> callback) {
+    public void login(String username, String password, Callback<HeaderAndBody> callback, AeroDocActivity activity) {
+        AuthenticationModule authBackEnd = this.authenticator.get("login", activity);
         authBackEnd.login(username, password, callback);
     }
 
-    public void logout(Callback<Void> callback) {
+    public void logout(Callback<Void> callback, AeroDocActivity activity) {
+        AuthenticationModule authBackEnd = this.authenticator.get("login", activity);
         authBackEnd.logout(callback);
     }
 
     public boolean isLoggedIn() {
+        AuthenticationModule authBackEnd = this.authenticator.get("login");
         return authBackEnd.isLoggedIn();
     }
 
